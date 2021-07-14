@@ -33,3 +33,14 @@ ACCESS_SECRET = os.environ.get("ACCESS_SECRET")
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
+
+# Retrieve last seen ID
+def retrieve_LSID(FILE):
+    with open(FILE, 'r') as file:
+        LSID = int(file.read().strip())
+    return LSID
+
+# Stores last seen ID
+def store_LSID(LSID, FILE):
+    with open(FILE, 'w') as file:
+        file.write(str(LSID))
