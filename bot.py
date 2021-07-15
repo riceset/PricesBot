@@ -50,39 +50,42 @@ def reply():
 
     for mention in reversed(mentions):
 
+        # prints the mention
         print(f"{mention.id} - {mention.text}")
 
+        # looks for hashtags
         pattern = re.compile(r"#(\w+)")
         hashtags = pattern.findall(mention.text)
 
         hashtags = [hashtag.upper() for hashtag in hashtags]
 
+        # stores the tweet ID (used to ignore the current tweet on the next call)
         LSID = mention.id
         store_LSID(LSID, 'ID.txt')
 
+        # creates a list with valid currencies (mentioned on the hashtags)
         currencies = list(set(hashtags).intersection(symbols))
 
-        print(currencies)
-        print(f"size: {len(currencies)}")
+        # prints all the valid currencies - count
+        print(f'{currencies}\n"{len(currencies)}"')
 
         prices = []
 
+        # gets the price of each currency
         for currency in currencies:
             price = lookup(currency)
             prices.append(price)
             sleep(1)
 
-        print(currencies)
-        print(prices)
-
         reply_tweet = ''
 
+        # prepares the string to be tweeted
         for currency, price in zip(currencies, prices):
-            temp_string = currency + ': ' + price + '\n'
+            temp_string = '#' + currency + ': ' + price + '\n'
             reply_tweet += temp_string
 
-        print(reply_tweet)
-
+        # tweets back
+        print(f"reply:\n{reply_tweet}")
         api.update_status(reply_tweet, mention.id)
 
 
