@@ -4,6 +4,7 @@ import json
 import tweepy
 from sys import exit
 from crypto import lookup
+from nomics import Nomics
 from time import sleep
 
 """ Sets up the Twitter API """
@@ -60,17 +61,17 @@ def reply():
         store_LSID(LSID, 'ID.txt')
 
         currencies_list = list(set(hashtags).intersection(symbols))
-        currencies_dict = dict.fromkeys(currencies_list, None)
+        coins = dict.fromkeys(currencies_list, None)
 
-        for currency in currencies_dict:
-             print(lookup(currency))
+        for currency in coins:
+            coins[currency] = lookup(currency)
 
-        # username = mention.user.screen_name
-        # reply_tweet = f"@{username} {selected_symbol}"
+        reply_tweet = ''
+        for coin in coins:
+            temp_string = coin + ': ' + coins[coin] + '\n'
+            reply_tweet += temp_string
 
-        # print(reply_tweet)
-
-            # api.update_status(reply_tweet, mention.id)
+        api.update_status(reply_tweet, mention.id)
 
 
 while True:

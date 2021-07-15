@@ -1,7 +1,6 @@
 import os
+from sys import argv
 from nomics import Nomics
-
-""" Defines a function to lookup a cryptocurrency via its symbol """
 
 def lookup(symbol):
     # Gets the API Key from an environment variable
@@ -10,7 +9,15 @@ def lookup(symbol):
     # Gets info about the currency in JSON format
     try:
         info = Nomics(api_key).Currencies.get_currencies(ids = symbol.upper())
-        return info[0]["price"]
+        info = info[0]
+        price = '$' + info['price']
+        return price
 
     except IndexError:
         return None
+
+if len(argv) == 2:
+    coin = lookup(argv[1])
+    if not coin == None:
+        for item in coin:
+            print(f"{item}: {coin[item]}")
