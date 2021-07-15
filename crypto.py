@@ -8,8 +8,10 @@ def lookup(symbol):
 
     # Gets info about the currency in JSON format
     try:
-        info = Nomics(api_key).Currencies.get_currencies(ids = symbol.upper())
+        nomics = Nomics(api_key)
+        info = nomics.Currencies.get_currencies(ids = symbol)
         info = info[0]
+
         price = '$' + info['price']
         return price
 

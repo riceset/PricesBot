@@ -62,11 +62,15 @@ def reply():
 
         currencies = list(set(hashtags).intersection(symbols))
 
+        print(currencies)
+        print(f"size: {len(currencies)}")
+
         prices = []
 
         for currency in currencies:
             price = lookup(currency)
             prices.append(price)
+            sleep(1)
 
         print(currencies)
         print(prices)
