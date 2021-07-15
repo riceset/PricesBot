@@ -22,3 +22,11 @@ def lookup(symbol):
 
     except IndexError:
         return None
+
+
+if len(argv) == 2:
+    coin = argv[1].upper()
+    price = lookup(coin)
+    
+    if price is not None:
+        print(f"{coin}: {price}")
