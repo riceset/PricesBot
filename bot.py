@@ -60,16 +60,24 @@ def reply():
         LSID = mention.id
         store_LSID(LSID, 'ID.txt')
 
-        currencies_list = list(set(hashtags).intersection(symbols))
-        coins = dict.fromkeys(currencies_list, None)
+        currencies = list(set(hashtags).intersection(symbols))
 
-        for currency in coins:
-            coins[currency] = lookup(currency)
+        prices = []
+
+        for currency in currencies:
+            price = lookup(currency)
+            prices.append(price)
+
+        print(currencies)
+        print(prices)
 
         reply_tweet = ''
-        for coin in coins:
-            temp_string = coin + ': ' + coins[coin] + '\n'
+
+        for currency, price in zip(currencies, prices):
+            temp_string = currency + ': ' + price + '\n'
             reply_tweet += temp_string
+
+        print(reply_tweet)
 
         api.update_status(reply_tweet, mention.id)
 
