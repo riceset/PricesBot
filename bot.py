@@ -84,9 +84,15 @@ def reply():
             temp_string = '#' + currency + ': ' + price + '\n'
             reply_tweet += temp_string
 
-        # tweets back
         print(f"reply:\n{reply_tweet}")
-        api.update_status(reply_tweet, mention.id)
+
+        # tweets back
+        try:
+            api.update_status(reply_tweet, mention.id)
+
+        except tweepy.error.TweepError:
+            # If the response cannot fit 280 characters.
+            api.update_status("Error: The response is too long. Please try again.", mention.id)
 
 
 while True:
