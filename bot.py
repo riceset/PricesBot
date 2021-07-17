@@ -93,7 +93,7 @@ def reply():
 
         except tweepy.error.TweepError:
             # If the response cannot fit 280 characters.
-            api.update_status("Error: The response is too long. Please try again.", mention.id)
+            api.update_status('@' + username + "Error: The response is too long. Please try again.", mention.id)
 
 
 while True:
