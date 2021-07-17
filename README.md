@@ -73,5 +73,3 @@ Only valid currencies will be sent on the reply.
 - [Tweepy Library](https://github.com/tweepy/tweepy)
 
 - [Nomics Python](https://github.com/TaylorFacen/nomics-python)
-
-- [Tweepy.org](https://www.tweepy.org/)
