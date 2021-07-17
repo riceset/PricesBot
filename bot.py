@@ -1,45 +1,10 @@
-import os
 import re
-import json
 import tweepy
-from sys import exit
-from crypto import lookup
-from nomics import Nomics
 from time import sleep
+from crypto import lookup
+from symbols import symbols
+from twitter import api, store_LSID, retrieve_LSID
 
-""" Sets up the Twitter API """
-
-CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
-CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
-ACCESS_KEY = os.environ.get("ACCESS_KEY")
-ACCESS_SECRET = os.environ.get("ACCESS_SECRET")
-
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-api = tweepy.API(auth)
-
-# Retrieve the last seen ID
-def retrieve_LSID(FILE):
-    with open(FILE) as file:
-        LSID = int(file.read().strip())
-    return LSID
-
-
-# Stores the last seen ID
-def store_LSID(LSID, FILE):
-    with open(FILE, 'w') as file:
-        file.write(str(LSID))
-
-
-# Converting cryptocurrencies JSON into a dictionary
-CRYPTOCURRENCIES_JSON = f"{os.getcwd()}/cryptocurrencies.json"
-CRYPTOCURRENCIES = {}
-
-with open(CRYPTOCURRENCIES_JSON) as JSON:
-    CRYPTOCURRENCIES = json.load(JSON)
-
-# A list of all the keys on the dictionary
-symbols = [symbol for symbol in CRYPTOCURRENCIES.keys()]
 
 def reply():
 
@@ -67,7 +32,7 @@ def reply():
         currencies = list(set(hashtags).intersection(symbols))
 
         # prints all the valid currencies - count
-        print(f'{currencies}\n"{len(currencies)}"')
+        print(f'{currencies}\nCount: "{len(currencies)}"')
 
         prices = []
 
