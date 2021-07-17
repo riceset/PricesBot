@@ -77,7 +77,8 @@ def reply():
             prices.append(price)
             sleep(1)
 
-        reply_tweet = ''
+        username = mention.user.screen_name
+        reply_tweet = '@' + username + '\n'
 
         # prepares the string to be tweeted
         for currency, price in zip(currencies, prices):
